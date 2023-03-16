@@ -1,0 +1,42 @@
+DATA BASE FOR MONGO DB
+
+nimone: {
+   nimone_id: string,
+   kinds_of_work: string,
+   location: string,
+   time: data,
+   date: date, 
+   amount_monk: int,
+   tell: string,
+   notic: string
+
+   address: address_id
+   user: user_id,
+}
+
+user: {
+   first_name: string, 
+   last_name: string,
+   tell: Array<string> 
+   address: address_id
+}
+
+address: {
+   house_number: string,
+   village: string,
+   sub_district: string,
+   district: string,
+   province: string,
+   post_number: string
+}
+
+===================================================================================================
+
+const addressesSchema = new mongoose.Schema({
+   house_number: "",
+   village: "",
+   sub_district: "",
+   district: "",
+   province: "",
+   post_number: "",
+})
