@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 
 
 /**
- * 
  * @param {*} req 
  * @param {*} res 
  */
@@ -20,9 +19,9 @@ export const createNimone = function(req, res) {
 
       if (Object.keys(address).length > 0) {
 
-      /**
-       * CREATE ADDRESSES
-       */
+         /**
+          * CREATE ADDRESSES 
+          */
          const address_doc = new Addresses({
             _id: new mongoose.Types.ObjectId(),
             house_number: address.house_number,
@@ -44,9 +43,9 @@ export const createNimone = function(req, res) {
             address: address_doc._id
          })
 
-      /**
-       * CREATE NIMONE DOCUMENT
-       */
+         /**
+          * CREATE NIMONE DOCUMENT
+          */
           const nimone_doc = new Nimones({
             tell: nimone.tell,
             kinds_of_work: nimone.kinds_of_work,
@@ -57,12 +56,13 @@ export const createNimone = function(req, res) {
             user: user_doc._id,
             address: address_doc._id
          })
-         
+
          nimone_doc.save().then(() => {
             user_doc.save();
-            address_doc.save()
-            res.send('nimone is save successfully')
-         }) 
+            address_doc.save();
+
+            res.status(200).send('save data successfully')
+         })
        
       }
       // WHITOUT ADDRESS
@@ -79,7 +79,6 @@ export const createNimone = function(req, res) {
        * CREATE NIMONE DOCUMENT
        */
 
-         console.log(user_doc._id, 'rerere')
          const nimone_doc = new Nimones({
             tell: nimone.tell,
             kinds_of_work: nimone.kinds_of_work,
@@ -88,16 +87,20 @@ export const createNimone = function(req, res) {
             amount_monk: nimone.amount_monk,
             notic: nimone.notic? nimone.notic: '',
             user: user_doc._id,
-         }).save().then(() => {
-            user_doc.save()
-            res.send('nimone without addres is save successfully')
-         })         
+         })     
+         
+         nimone_doc.save().then(() => {
+            user_doc.save();
+            address_doc.save();
+
+            res.status(200).send('save data successfully no address')
+         })
       }
 
 
    } catch(err) {
-      console.log(err)
-      res.status(404).json(err);
+      console.log();
+      res.status(500).json(err);
    }
 }
 
@@ -118,7 +121,7 @@ export const getNimone = async function(req, res) {
       }
    } 
    catch(err) {
-      console.log(err)
+      console.log('error')
       res.status(400).json({
          msg: 'bad request'
       })

@@ -40,3 +40,13 @@ const addressesSchema = new mongoose.Schema({
    province: "",
    post_number: "",
 })
+
+req.user : {
+   first_name: string,
+   last_name: string,
+   tell: [string],
+};
+
+req.address: {
+   
+}
