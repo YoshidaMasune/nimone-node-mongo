@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { createNimone, getNimone } from '../controllers/nimone.comtroll.js';
+import { createNimone, getNimone } from '../controllers/work.control.js';
 import { fillNimoneRequest } from '../middlewares/nimone.middle.js';
 
 const router = express.Router();

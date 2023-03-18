@@ -1,6 +1,6 @@
 import Users from "../models/users.js";
 import Addresses from "../models/addresses.js";
-import Nimones from "../models/nimones.js";
+import Works from "../models/works.js";
 import mongoose from "mongoose";
 
 
@@ -11,7 +11,7 @@ import mongoose from "mongoose";
 export const createNimone = function(req, res) {
    
    try {
-      const { nimone, user, address } = req.body;
+      const { work, user, address } = req.body;
 
       /*
        * FILLTER NULL OF ADDRESS
@@ -39,29 +39,32 @@ export const createNimone = function(req, res) {
             _id: new mongoose.Types.ObjectId(),
             first_name: user.first_name,
             last_name: user.last_name,
-            tell: [nimone.tell],
+            tell: [work.tell],
             address: address_doc._id
          })
 
          /**
           * CREATE NIMONE DOCUMENT
           */
-          const nimone_doc = new Nimones({
-            tell: nimone.tell,
-            kinds_of_work: nimone.kinds_of_work,
-            location: nimone.location,
+          const work_doc = new Works({
+            tell: work.tell,
+            kinds_of_work: work.kinds_of_work,
+            location: work.location,
             date_time: new Date(),
-            amount_monk: nimone.amount_monk,
-            notic: nimone.notic? nimone.notic: '',
+            amount_monk: work.amount_monk,
+            notic: work.notic? work.notic: '',
             user: user_doc._id,
             address: address_doc._id
          })
 
-         nimone_doc.save().then(() => {
+         work_doc.save().then(() => {
             user_doc.save();
             address_doc.save();
 
             res.status(200).send('save data successfully')
+         }).catch(err => {
+            console.log(err);
+            res.status(400).send(err.message)
          })
        
       }
@@ -79,28 +82,31 @@ export const createNimone = function(req, res) {
        * CREATE NIMONE DOCUMENT
        */
 
-         const nimone_doc = new Nimones({
-            tell: nimone.tell,
-            kinds_of_work: nimone.kinds_of_work,
-            location: nimone.location,
+         const work_doc = new Works({
+            tell: work.tell,
+            kinds_of_work: work.kinds_of_work,
+            location: work.location,
             date_time: new Date(),
-            amount_monk: nimone.amount_monk,
-            notic: nimone.notic? nimone.notic: '',
+            amount_monk: work.amount_monk,
+            notic: work.notic? work.notic: '',
             user: user_doc._id,
          })     
          
-         nimone_doc.save().then(() => {
+         work_doc.save().then(() => {
             user_doc.save();
-            address_doc.save();
 
-            res.status(200).send('save data successfully no address')
+            res.status(200).send('save data successfully')
+         }).catch(err => {
+
+            console.log(err);
+            res.status(400).send(err.message)
          })
       }
 
 
    } catch(err) {
-      console.log();
-      res.status(500).json(err);
+      console.log(err);
+      res.status(500).send(err)
    }
 }
 

@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 import nimoneRouter from './routes/nimone.route.js'
+import monkRouter from './routes/monk.route.js'
+
 import bodyParser from 'body-parser';
 import { fillNimoneRequest } from './middlewares/nimone.middle.js';
 
@@ -19,7 +21,8 @@ app.use(bodyParser.json())
 // app.use('/nimone', fillNimoneRequest)
 
 /* USEROUTES */
-app.use('/nimone', nimoneRouter);
+app.use('/work', nimoneRouter);
+app.use('/monk', monkRouter)
 
 /* CONNECT MONGOOSE */
 
