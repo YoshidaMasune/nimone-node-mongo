@@ -1,3 +1,10 @@
+/**
+ * 
+ * @param {*} request 
+ * @param {*} arrFill 
+ * @returns 
+ */
+
 export const validationRequest = (request, arrFill=[]) => {
    const lenRequest = Object.entries(request).length;
 

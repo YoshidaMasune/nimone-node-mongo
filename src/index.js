@@ -2,11 +2,10 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-import nimoneRouter from './routes/nimone.route.js'
+import workRouter from './routes/work.route.js'
 import monkRouter from './routes/monk.route.js'
 
 import bodyParser from 'body-parser';
-import { fillNimoneRequest } from './middlewares/nimone.middle.js';
 
 /* CONFIGURATION */
 dotenv.config();
@@ -21,13 +20,13 @@ app.use(bodyParser.json())
 // app.use('/nimone', fillNimoneRequest)
 
 /* USEROUTES */
-app.use('/work', nimoneRouter);
+app.use('/work', workRouter);
 app.use('/monk', monkRouter)
 
 /* CONNECT MONGOOSE */
 
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
