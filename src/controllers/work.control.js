@@ -14,14 +14,13 @@ export const createWork = function(req, res) {
    const { work, user, address } = req.body;
 
    const feildAddressArray = ['village', 'district', 'sub_district', 'province',];
-   const fillAddress = validationRequest(address, feildAddressArray)
-
+   
    try {
       /*
       * FILLTER NULL OF ADDRESS
       */
      
-     if (Object.keys(address).length > 0) {
+     if (address != undefined) {
          const fillAddress = validationRequest(address, feildAddressArray)
 
          if (!fillAddress.success) {
@@ -69,11 +68,10 @@ export const createWork = function(req, res) {
             work_doc.save().then(() => {
                user_doc.save();
                address_doc.save();
-   
                res.status(200).send('save data successfully')
             }).catch(err => {
                console.log(err);
-               res.status(400).send(err.message)
+               res.status(400).json(err.message)
             })
          }
       }
@@ -84,7 +82,7 @@ export const createWork = function(req, res) {
             _id: new mongoose.Types.ObjectId(),
             first_name: user.first_name,
             last_name: user.last_name,
-            tell: [...nimone.tell]
+            tell: [...user.tell]
          })
 
       /**
@@ -108,14 +106,14 @@ export const createWork = function(req, res) {
          }).catch(err => {
 
             console.log(err);
-            res.status(400).send(err.message)
+            res.status(400).json(err.message)
          })
       }
 
 
    } catch(err) {
       console.log(err);
-      res.status(500).send(err)
+      res.status(500).json(err)
    }
 }
 
@@ -126,17 +124,38 @@ export const createWork = function(req, res) {
  */
 export const getWork = async function(req, res, next) {
 
+   const workId = req.params.workId;
+   
    try{
-      const datas = await Works.find().populate('user').populate('address').exec()
 
-      if (datas.length === 1){
-         res.json(datas[0]);
+      if (Object.entries(req.query).length > 0) {
+         const workFind = await Works.find({...req.query}).populate('user').populate('address');
+         
+         if (workFind.length === 0) {
+            res.send('not found in database');
+         }
+         else if (workFind.length === 1){
+            res.json(workFind[0]);
+         }
+         else {
+            res.json(workFind)
+         }
       }
-      else if (datas.length === 0){
-         res.send('no data in database')
-      }
-      else {
-         res.json(datas);
+      else if (workId != undefined) {
+         const data = await Works.findById(workId).populate('user').populate('address')
+
+         res.json(data)
+         
+      }else {
+         
+         const datas = await Works.find().populate('user').populate('address').exec()
+         
+         if (datas.length === 0){
+            res.send('no data in database')
+         }
+         else {
+            res.json(datas);
+         }
       }
    } 
    catch(err) {
@@ -144,4 +163,3 @@ export const getWork = async function(req, res, next) {
       res.status(400).json(err)
    }
 }
-

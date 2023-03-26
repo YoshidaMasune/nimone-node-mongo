@@ -9,7 +9,7 @@ nimone: {
    amount_monk: int,
    tell: string,
    notic: string
-
+   
    address: address_id
    user: user_id,
 }

@@ -17,8 +17,10 @@ const nimoneSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.Mixed,
       default: {
          success: false,
-         unsuccess: true,
-         mistake: false
+         mistake: false,
+         unsubmit: false,
       }
    }
 })
+
+export default Nimones = mongoose.model('nimones', nimoneSchema);

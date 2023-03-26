@@ -1,9 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors'
 
 import workRouter from './routes/work.route.js'
 import monkRouter from './routes/monk.route.js'
+import nimoneRouter from './routes/nimone.route.js'
 
 import bodyParser from 'body-parser';
 
@@ -14,14 +16,14 @@ const app = express();
 
 /* USEMIDDLEWARE */
 app.use(express.json());
-app.use(express.urlencoded({extended: false}))
-app.use(bodyParser.json())
-
-// app.use('/nimone', fillNimoneRequest)
+app.use(express.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(cors());
 
 /* USEROUTES */
 app.use('/work', workRouter);
-app.use('/monk', monkRouter)
+app.use('/monk', monkRouter);
+app.use('/nimone', nimoneRouter)
 
 /* CONNECT MONGOOSE */
 

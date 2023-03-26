@@ -11,7 +11,7 @@ router.post('/', fillWorkRequest, createWork);
 
 /* GET NIMONE */
 // get by params
-router.get('/:nimoneId', getWork)
+router.get('/:workId', getWork)
 
 // get all docs
 router.get('/', getWork);
